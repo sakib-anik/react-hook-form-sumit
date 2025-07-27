@@ -23,6 +23,14 @@ export default function RegistrationForm() {
     <div className="flex flex-col justify-center items-center">
       <form onSubmit={handleSubmit(submitForm)}>
         <FieldSet label="Enter Your Basic Details">
+          <Field label="Picture" error={errors.picture}>
+            <input
+              {...register("picture", { required: "Picture is required." })}
+              type="file"
+              name="picture"
+              id="picture"
+            />
+          </Field>
           <Field label="Email" error={errors.email}>
             <input
               {...register("email", { required: "Email is required." })}
@@ -69,6 +77,7 @@ export default function RegistrationForm() {
             <Controller
               name="age"
               control={control}
+              defaultValue={1}
               render={({ field: { ref, ...field } }) => (
                 <NumberInput
                   id="age"
