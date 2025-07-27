@@ -1,6 +1,7 @@
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import Field from "../components/Field";
 import FieldSet from "../components/FieldSet";
+import NumberInput from "../components/NumberInput";
 export default function RegistrationForm() {
   const {
     register,
@@ -65,21 +66,24 @@ export default function RegistrationForm() {
             />
           </Field>
           <Field label="Age" error={errors.age}>
-            <input
-              {...register("age", {
-                required: "Age is required.",
+            <Controller
+              name="age"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <NumberInput
+                  id="age"
+                  className={`p-2 border box-border w-full rounded-md ${
+                    errors.age ? "border-red-500" : "border-gray-200"
+                  }`}
+                  {...field}
+                />
+              )}
+              rules={{
                 max: {
                   value: 100,
-                  message: "Age must be between 0 and 100",
+                  message: "Age can be between 0 and 100",
                 },
-              })}
-              className={`p-2 border box-border w-[300px] rounded-md ${
-                errors.age ? "border-red-500" : "border-gray-200"
-              }`}
-              type="number"
-              name="age"
-              id="age"
-              placeholder="Enter Age"
+              }}
             />
           </Field>
         </FieldSet>
